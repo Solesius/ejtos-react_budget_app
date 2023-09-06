@@ -2,14 +2,21 @@ import React, { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
 
 const AllocationForm = (props) => {
-  const { dispatch, remaining } = useContext(AppContext);
+  const { dispatch, remaining, currency } = useContext(AppContext);
 
   const [name, setName] = useState("");
   const [cost, setCost] = useState("");
   const [action, setAction] = useState("");
 
   const submitEvent = () => {
-    if (cost > remaining) {
+
+    if (isNaN(cost)) {
+        alert("The cost must be an integer type");
+        setCost("");
+        return;
+    }
+    
+    if (+cost > remaining) {
       alert("The value cannot exceed remaining funds  $" + remaining);
       setCost("");
       return;
@@ -50,7 +57,6 @@ const AllocationForm = (props) => {
           >
             <option defaultValue>Choose...</option>
             <option value="Marketing" name="marketing">
-              {" "}
               Marketing
             </option>
             <option value="Sales" name="sales">
@@ -87,7 +93,10 @@ const AllocationForm = (props) => {
               Reduce
             </option>
           </select>
-
+<div className="col-12">
+        <label>
+            {currency}
+        </label>
           <input
             required="required"
             type="number"
@@ -95,7 +104,9 @@ const AllocationForm = (props) => {
             value={cost}
             style={{ marginLeft: "2rem", size: 10 }}
             onChange={(event) => setCost(event.target.value)}
-          ></input>
+          >
+            
+          </input>
 
           <button
             className="btn btn-primary"
@@ -104,6 +115,7 @@ const AllocationForm = (props) => {
           >
             Save
           </button>
+          </div>
         </div>
       </div>
     </div>

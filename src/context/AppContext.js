@@ -8,7 +8,7 @@ export const AppReducer = (state, action) => {
             let total_budget = 0;
             total_budget = state.expenses.reduce(
                 (previousExp, currentExp) => {
-                    return previousExp + currentExp.cost
+                    return previousExp +  (+currentExp.cost)
                 },0
             );
             total_budget = total_budget + action.payload.cost;
@@ -78,7 +78,7 @@ export const AppReducer = (state, action) => {
 
 // 1. Sets the initial state when the app loads
 const initialState = {
-    budget: 50000,
+    budget: 5000,
     expenses: [
         { id: "Marketing", name: 'Marketing', cost: 50 },
         { id: "Finance", name: 'Finance', cost: 300 },
